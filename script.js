@@ -24,9 +24,16 @@ function Book(title,author,pages,read) {
 
   function addBookToLibrary (newBook) {
       myLibrary.push(newBook);
-      createCard(newBook);
+      updateLibrary();
   }
-
+  function updateLibrary() {
+    resetLibraryDisplay();
+    for (let part of myLibrary) {
+      createCard(part);
+    }}
+   function resetLibraryDisplay() {
+     cardContainer.innerHTML = "";
+  }
   function createCard(newBook) {
     let newDiv = document.createElement("div");
     newDiv.style.backgroundColor = "gray";
@@ -38,5 +45,20 @@ function Book(title,author,pages,read) {
       txt += "<br>"+newBook[x]+"</br>";
     }
     newDiv.innerHTML = txt;
+    let removeButton = document.createElement("button");
+    removeButton.innerHTML = "Remove Book";
+    removeButton.addEventListener("click", function (){
+      removeEntry(newBook)
+  } )
+    newDiv.appendChild(removeButton);
     document.getElementById("card-div").appendChild(newDiv);
+  }
+
+  function removeEntry(entry) {
+    const index = myLibrary.indexOf(entry);
+    if (index > -1) {
+      myLibrary.splice(index,1);
+    }
+    updateLibrary();
+
   }
