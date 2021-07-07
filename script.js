@@ -2,9 +2,14 @@ const newBookButton = document.querySelector("#new-book-button");
 newBookButton.addEventListener("click", function (){
     createNewBook()
 } )
+const undoButton = document.querySelector("#undo-button");
+undoButton.addEventListener("click", function() {
+  recoverLibrary()
+})
 const cardContainer = document.querySelector("#card-div");
 
 let myLibrary = [];
+let mySavedLibrary = [];
 
 function Book(title,author,pages,read) {
     this.title = title
@@ -24,11 +29,12 @@ function Book(title,author,pages,read) {
 
   function addBookToLibrary (newBook) {
       myLibrary.push(newBook);
-      updateLibrary();
+      mySavedLibrary.push(newBook);
+      updateLibrary(myLibrary);
   }
-  function updateLibrary() {
+  function updateLibrary(library) {
     resetLibraryDisplay();
-    for (let part of myLibrary) {
+    for (let part of library) {
       createCard(part);
     }}
    function resetLibraryDisplay() {
@@ -59,6 +65,10 @@ function Book(title,author,pages,read) {
     if (index > -1) {
       myLibrary.splice(index,1);
     }
-    updateLibrary();
+    updateLibrary(myLibrary);
 
+  }
+  function recoverLibrary() {
+    updateLibrary(mySavedLibrary);
+    myLibrary = [...mySavedLibrary];
   }
