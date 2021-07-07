@@ -2,7 +2,7 @@ const newBookButton = document.querySelector("#new-book-button");
 newBookButton.addEventListener("click", function (){
     createNewBook()
 } )
-
+const cardContainer = document.querySelector("#card-div");
 
 let myLibrary = [];
 
@@ -11,15 +11,7 @@ function Book(title,author,pages,read) {
     this.author = author
     this.pages = pages
     this.read = read
-    this.info = function(read) {
-      if (this.read == true) {
-        console.log(title + " by " + author + ", " + pages + " pages, read.")
-      }
-      else {
-        console.log( title + " by " + author + ", " + pages + " pages, not read yet.")
-      }
-      
-    }
+    
   }
  function createNewBook(){
      let newBookTitle = window.prompt("Enter the book's title:")
@@ -32,4 +24,19 @@ function Book(title,author,pages,read) {
 
   function addBookToLibrary (newBook) {
       myLibrary.push(newBook);
+      createCard(newBook);
+  }
+
+  function createCard(newBook) {
+    let newDiv = document.createElement("div");
+    newDiv.style.backgroundColor = "gray";
+    newDiv.style.margin ="10px 10px 10px 10px";
+    newDiv.style.height ="200px";
+    newDiv.style.width = "200px";
+    let txt = ""
+    for (let x in newBook) {
+      txt += "<br>"+newBook[x]+"</br>";
+    }
+    newDiv.innerHTML = txt;
+    document.getElementById("card-div").appendChild(newDiv);
   }
