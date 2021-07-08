@@ -7,9 +7,18 @@ undoButton.addEventListener("click", function() {
   recoverLibrary()
 })
 const cardContainer = document.querySelector("#card-div");
+const popupDiv = document.querySelector("#popup-div");
 
 let myLibrary = [];
 let mySavedLibrary = [];
+
+function openForm() {
+  popupDiv.style.display = "block";
+}
+
+function closeForm() {
+  popupDiv.style.display = "none";
+}
 
 function Book(title,author,pages,read) {
     this.title = title
