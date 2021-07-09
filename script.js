@@ -1,6 +1,6 @@
 const newBookButton = document.querySelector("#new-book-button");
 newBookButton.addEventListener("click", function (){
-    createNewBook()
+    openForm();
 } )
 const undoButton = document.querySelector("#undo-button");
 undoButton.addEventListener("click", function() {
@@ -8,6 +8,10 @@ undoButton.addEventListener("click", function() {
 })
 const cardContainer = document.querySelector("#card-div");
 const popupDiv = document.querySelector("#popup-div");
+const submitButton = document.querySelector("#submit-button");
+submitButton.addEventListener("click", function (){
+  createNewBook(); closeForm(); document.querySelector("#new-book-form").reset();
+} )
 
 let myLibrary = [];
 let mySavedLibrary = [];
@@ -28,10 +32,16 @@ function Book(title,author,pages,read) {
     
   }
  function createNewBook(){
-     let newBookTitle = window.prompt("Enter the book's title:")
-     let newBookAuthor = window.prompt("Enter the book's author:")
-     let newBookPages = window.prompt("Enter the book's pages:")
-     let newBookRead = true;
+     let newBookTitle = document.querySelector("#title-input").value;
+     let newBookAuthor = document.querySelector("#author-input").value;
+     let newBookPages = document.querySelector("#pages-input").value;
+     let newBookRead = document.querySelector("#read-input").checked;
+     if (newBookRead == true) {
+       newBookRead = "Read";
+     }
+     else {
+       newBookRead = "Not Read";
+     }
      let newBook = new Book (newBookTitle, newBookAuthor, newBookPages, newBookRead);
      addBookToLibrary(newBook);
  }
@@ -55,17 +65,27 @@ function Book(title,author,pages,read) {
     newDiv.style.margin ="10px 10px 10px 10px";
     newDiv.style.height ="200px";
     newDiv.style.width = "200px";
-    let txt = ""
+   
     for (let x in newBook) {
-      txt += "<br>"+newBook[x]+"</br>";
+      let newLine = document.createElement("p");
+      newLine.innerHTML = newBook[x];
+      newDiv.appendChild(newLine);
     }
-    newDiv.innerHTML = txt;
+    
     let removeButton = document.createElement("button");
     removeButton.innerHTML = "Remove Book";
     removeButton.addEventListener("click", function (){
       removeEntry(newBook)
   } )
     newDiv.appendChild(removeButton);
+
+    let changeButton = document.createElement("button");
+    changeButton.innerHTML = "Change Read Status";
+    changeButton.addEventListener("click", function () {
+      changeReadStatus(newBook)
+    })
+    newDiv.appendChild(changeButton);
+
     document.getElementById("card-div").appendChild(newDiv);
   }
 
@@ -81,3 +101,13 @@ function Book(title,author,pages,read) {
     updateLibrary(mySavedLibrary);
     myLibrary = [...mySavedLibrary];
   }
+  function changeReadStatus(entry) {
+   
+    if (entry[this.read] == "Read") {
+      entry[this.read] = "Not Read";
+    }
+    else if (entry[this.read] == "Not Read"){
+      entry[this.read] = "Read";
+    }
+    updateLibrary(myLibrary);}
+    
