@@ -36,12 +36,12 @@ function Book(title,author,pages,read) {
      let newBookAuthor = document.querySelector("#author-input").value;
      let newBookPages = document.querySelector("#pages-input").value;
      let newBookRead = document.querySelector("#read-input").checked;
-     if (newBookRead == true) {
-       newBookRead = "Read";
-     }
-     else {
-       newBookRead = "Not Read";
-     }
+    //  if (newBookRead == true) {
+    //    newBookRead = "Read";
+    //  }
+    //  else {
+    //    newBookRead = "Not Read";
+    //  }
      let newBook = new Book (newBookTitle, newBookAuthor, newBookPages, newBookRead);
      addBookToLibrary(newBook);
  }
@@ -67,9 +67,22 @@ function Book(title,author,pages,read) {
     newDiv.style.width = "200px";
    
     for (let x in newBook) {
+      if (x === "read") {
+        if (newBook.read === true) {
+        let newLine = document.createElement("p");
+        newLine.innerHTML = "Read";
+        newDiv.appendChild(newLine);}
+        else {
+        let newLine = document.createElement("p");
+        newLine.innerHTML = "Not Read";
+        newDiv.appendChild(newLine);}
+        }
+      
+      else {
+        
       let newLine = document.createElement("p");
       newLine.innerHTML = newBook[x];
-      newDiv.appendChild(newLine);
+      newDiv.appendChild(newLine);}
     }
     
     let removeButton = document.createElement("button");
@@ -102,12 +115,11 @@ function Book(title,author,pages,read) {
     myLibrary = [...mySavedLibrary];
   }
   function changeReadStatus(entry) {
-   
-    if (entry[this.read] == "Read") {
-      entry[this.read] = "Not Read";
+    if (entry.read) {
+      entry.read = false;
     }
-    else if (entry[this.read] == "Not Read"){
-      entry[this.read] = "Read";
+    else {
+      entry.read = true;
     }
     updateLibrary(myLibrary);}
     
