@@ -24,11 +24,13 @@ function closeForm() {
   popupDiv.style.display = "none";
 }
 
-function Book(title,author,pages,read) {
+class Book{
+
+  constructor(title,author,pages,read) {
     this.title = title
     this.author = author
     this.pages = pages
-    this.read = read
+    this.read = read }
     
   }
  function createNewBook(){
@@ -36,12 +38,6 @@ function Book(title,author,pages,read) {
      let newBookAuthor = document.querySelector("#author-input").value;
      let newBookPages = document.querySelector("#pages-input").value;
      let newBookRead = document.querySelector("#read-input").checked;
-    //  if (newBookRead == true) {
-    //    newBookRead = "Read";
-    //  }
-    //  else {
-    //    newBookRead = "Not Read";
-    //  }
      let newBook = new Book (newBookTitle, newBookAuthor, newBookPages, newBookRead);
      addBookToLibrary(newBook);
  }
